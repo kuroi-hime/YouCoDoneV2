@@ -34,6 +34,15 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
+        if ($request->hasFile('profile_photo')) {
+            $path = $request->file('profile_photo')->store('profiles', 'private');
+
+            $request->user()->image()->updateOrCreate(
+                ['imageable_id' => $request->user()->id, 'imageable_type' => get_class($request->user())],
+                ['url' => $path]
+            );
+        }
+
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 

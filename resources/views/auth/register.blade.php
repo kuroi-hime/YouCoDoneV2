@@ -19,6 +19,18 @@
         </div>
 
         <div class="flex flex-col gap-1">
+            <label for="email" class="text-sm font-medium pb-1">Role</label>
+            <div class="relative group">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#4c9a4c] text-xl group-focus-within:text-primary">badge</span>
+                <select id="role" name="role_id" required
+                    class="w-full pl-12 rounded-xl border-[#cfe7cf] dark:border-[#2e4d2e] bg-white dark:bg-[#1b301b] focus:ring-2 focus:ring-primary/50 focus:border-primary h-14">
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="2" {{ old('role_id') == 2 ? 'selected' : '' }}>Client</option>
+                    <option value="3" {{ old('role_id') == 3 ? 'selected' : '' }}>Restaurateur</option>
+                </select>
+        </div>
+
+        <div class="flex flex-col gap-1">
             <label for="email" class="text-sm font-medium pb-1">Email Address</label>
             <div class="relative group">
                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#4c9a4c] text-xl group-focus-within:text-primary">mail</span>

@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                        {{ __('Home') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -98,3 +101,40 @@
         </div>
     </div>
 </nav>
+<!-- 
+ Sidebar Navigation
+<aside class="w-72 border-r border-[#cfe7cf] dark:border-[#2a4d2a] bg-white dark:bg-background-dark fixed h-full z-10">
+<div class="flex flex-col h-full p-6 justify-between">
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-3">
+<div class="bg-primary rounded-lg p-2">
+<span class="material-symbols-outlined text-white">restaurant_menu</span>
+</div>
+<h1 class="text-xl font-black tracking-tight uppercase">YouCo'Done</h1>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Tableau de bord</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-sm font-medium">Mes Réservations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/20 text-[#0d1b0d] dark:text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person</span>
+<span class="text-sm font-bold">Mon Profil</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Paramètres</span>
+</a>
+</nav>
+</div>
+<button class="flex w-full items-center justify-center gap-2 rounded-lg h-12 bg-primary text-[#0d1b0d] text-sm font-bold transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm">logout</span>
+<span>Déconnexion</span>
+</button>
+</div>
+</aside>
+-->
