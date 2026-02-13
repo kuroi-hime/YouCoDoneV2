@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -64,5 +65,10 @@ class User extends Authenticatable
     public function restaurants()
     {
         return $this->hasMany(Restaurant::class, 'id_restaurant');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'user_id', 'id');
     }
 }
