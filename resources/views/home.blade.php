@@ -38,6 +38,11 @@
                 font-variation-settings: 'FILL' 1;
                 color: #13ec13;
             }
+            input[type="date"]::-webkit-inner-spin-button,
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                display: none;
+                -webkit-appearance: none;
+            }
         </style>
     </head>
     <body class="bg-background-light dark:bg-background-dark text-[#0d1b0d] dark:text-[#f8fcf8] min-h-screen">
@@ -84,37 +89,28 @@
         <!-- Search & Filters Container -->
         <section class="mb-12 bg-white dark:bg-[#1a2e1a] p-4 rounded-xl shadow-xl border border-[#e7f3e7] dark:border-[#1d351d]">
         <div class="flex flex-col gap-4">
-            <!-- Main Search Input -->
             <form action="{{ route('home') }}" method="GET" class="flex gap-4 w-full">
-    <div class="relative  w-full">
-        <label class="flex items-center bg-background-light dark:bg-background-dark border border-[#e7f3e7] dark:border-[#1d351d] rounded-lg px-4 py-3 focus-within:ring-2 ring-primary/30 transition-all">
-            <span class="material-symbols-outlined text-[#4c9a4c] mr-3">search</span>
-            <input name="search" value="{{ request('search') }}" class="w-full bg-transparent border-none focus:ring-0 text-base placeholder:text-[#4c9a4c]" placeholder="Search by restaurant name or city..." type="text"/>
-        </label>
-    </div>
-    <div class="flex flex-wrap items-center gap-3">
-        <div class="ml-auto w-full md:w-auto">
-            <button type="submit" class="w-full md:w-auto bg-primary text-[#0d1b0d] px-8 py-2 rounded-lg font-bold hover:shadow-lg transition-all">
-                Search
-            </button>
+                <div class="relative w-full">
+                    <label class="flex items-center bg-background-light dark:bg-background-dark border border-[#e7f3e7] dark:border-[#1d351d] rounded-lg px-4 py-3 focus-within:ring-2 ring-primary/30 transition-all">
+                        <span class="material-symbols-outlined text-[#4c9a4c] mr-3">search</span>
+                        <input name="search" value="{{ request('search') }}" class="w-full bg-transparent border-none focus:ring-0 text-base placeholder:text-[#4c9a4c]" placeholder="Search by restaurant name or city..." type="text"/>
+                    </label>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="ml-auto w-full md:w-auto">
+                        <button type="submit" class="w-full md:w-auto bg-primary text-[#0d1b0d] px-8 py-2 rounded-lg font-bold hover:shadow-lg transition-all">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </div>
-</form>
-        </div>
-        </section>
+    </section>
 
 <!-- Restaurant Grid -->
 <section>
 <div class="flex items-center justify-between mb-6">
 <h3 class="text-2xl font-bold">Top Picks for You</h3>
-<!-- <div class="flex gap-2">
-<button class="p-2 border border-[#e7f3e7] dark:border-[#1d351d] rounded-lg hover:bg-white dark:hover:bg-[#1a2e1a] transition-colors">
-<span class="material-symbols-outlined">grid_view</span>
-</button>
-<button class="p-2 border border-[#e7f3e7] dark:border-[#1d351d] rounded-lg hover:bg-white dark:hover:bg-[#1a2e1a] transition-colors">
-<span class="material-symbols-outlined">format_list_bulleted</span>
-</button>
-</div> -->
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
     @forelse($restaurants as $restaurant)

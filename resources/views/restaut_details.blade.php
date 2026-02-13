@@ -155,67 +155,6 @@
         </div>
         <!-- Right Column: Booking Widget & Info -->
         <!-- <aside class="space-y-6"> -->
-            <!-- Sticky Booking Card -->
-            <!-- <div class="sticky top-24 bg-white dark:bg-[#1a331a] p-6 rounded-2xl shadow-2xl border border-primary/20">
-                <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary">event_available</span>
-                    Book a Table
-                </h3>
-                <div class="space-y-4">
-                    <div>
-                        <label class="text-xs font-bold uppercase tracking-wider opacity-60 block mb-1">Date</label>
-                        <div class="relative">
-                            <input class="w-full bg-[#f6f8f6] dark:bg-[#102210] border-none rounded-lg text-sm p-3 focus:ring-2 focus:ring-primary" type="date" value="2023-10-25"/>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="text-xs font-bold uppercase tracking-wider opacity-60 block mb-1">Guests</label>
-                            <select class="w-full bg-[#f6f8f6] dark:bg-[#102210] border-none rounded-lg text-sm p-3 focus:ring-2 focus:ring-primary">
-                            <option>2 People</option>
-                            <option>3 People</option>
-                            <option>4 People</option>
-                            <option>5+ People</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-xs font-bold uppercase tracking-wider opacity-60 block mb-1">Time</label>
-                            <select class="w-full bg-[#f6f8f6] dark:bg-[#102210] border-none rounded-lg text-sm p-3 focus:ring-2 focus:ring-primary">
-                            <option>19:30</option>
-                            <option>20:00</option>
-                            <option>20:30</option>
-                            <option>21:00</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="pt-2">
-                        <p class="text-[10px] text-center mb-2 opacity-60">High demand for this time slot</p>
-                        <button class="w-full bg-primary text-[#0d1b0d] font-bold py-4 rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">
-                            Confirm Reservation
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-center gap-4 pt-4 border-t border-[#e7f3e7] dark:border-white/5 mt-4">
-                        <button class="flex flex-col items-center gap-1 group">
-                        <div class="p-2 rounded-full bg-[#e7f3e7] dark:bg-white/5 group-hover:bg-primary/20 transition-colors">
-                            <span class="material-symbols-outlined text-xl">favorite</span>
-                        </div>
-                        <span class="text-[10px] font-bold">Save</span>
-                        </button>
-                        <button class="flex flex-col items-center gap-1 group">
-                            <div class="p-2 rounded-full bg-[#e7f3e7] dark:bg-white/5 group-hover:bg-primary/20 transition-colors">
-                                <span class="material-symbols-outlined text-xl">share</span>
-                            </div>
-                            <span class="text-[10px] font-bold">Share</span>
-                        </button>
-                        <button class="flex flex-col items-center gap-1 group">
-                        <div class="p-2 rounded-full bg-[#e7f3e7] dark:bg-white/5 group-hover:bg-primary/20 transition-colors">
-                        <span class="material-symbols-outlined text-xl">report</span>
-                        </div>
-                        <span class="text-[10px] font-bold">Report</span>
-                        </button>
-                    </div>
-                </div>
-            </div> -->
             <!-- Hours & Location Details -->
             <!-- <div class="bg-white dark:bg-[#1a331a] p-6 rounded-2xl border border-[#e7f3e7] dark:border-white/5 space-y-6">
             <div>
@@ -255,8 +194,52 @@
                 </div>
             </div> -->
         <!-- </aside> -->
+         <!--  sticky top-24 -->
          <aside class="space-y-6">
-            <div class="sticky top-24 bg-white dark:bg-[#1a331a] p-6 rounded-2xl shadow-xl border border-primary/20">
+            @auth
+            <!-- Sticky Booking Card -->
+            <div class="bg-white dark:bg-[#1a331a] p-6 rounded-2xl shadow-2xl border border-primary/20">
+                <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">event_available</span>
+                    Book a Table
+                </h3>
+                <form action="{{ Route('reservation.store') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="restaut_id" value="{{ $restaut->id_restaut }}">
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                    <input type="hidden" name="status_reservation" value="pending">
+                    <div>
+                        <label class="text-xs font-bold uppercase tracking-wider opacity-60 block mb-1">Date</label>
+                        <div class="relative">
+                            <input name="date_reservation" class="w-full bg-[#f6f8f6] dark:bg-[#102210] border-none rounded-lg text-sm p-3 focus:ring-2 focus:ring-primary" type="date"/>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-xs font-bold uppercase tracking-wider opacity-60 block mb-1">Guests</label>
+                            <input name="number_personnes_reservation" type="number" min="1" value="1" class="w-full bg-[#f6f8f6] dark:bg-[#102210] border-none rounded-lg text-sm p-3 focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold uppercase tracking-wider opacity-60 block mb-1">Time</label>
+                            <select name="creneau_id" class="w-full bg-[#f6f8f6] dark:bg-[#102210] border-none rounded-lg text-sm p-3 focus:ring-2 focus:ring-primary">
+                            @foreach($restaut->horaires as $horaire)
+                                <option value="{{ $horaire->pivot->id_creneau }}">{{ $horaire->pivot->heure_debut->format('H:i') }} - {{ $horaire->pivot->heure_fin->format('H:i') }}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <!-- <p class="text-[10px] text-center mb-2 opacity-60">High demand for this time slot</p> -->
+                        <button type="submit" class="w-full bg-primary text-[#0d1b0d] font-bold py-4 rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">
+                            Confirm Reservation
+                        </button>
+                    </div>
+                    
+                </form>
+            </div>
+            @endauth
+            <!-- Menu -->
+            <div class="bg-white dark:bg-[#1a331a] p-6 rounded-2xl shadow-xl border border-primary/20">
                 <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
                     <span class="material-symbols-outlined text-primary">menu_book</span>
                     {{ __('Restaurant Menu') }}
