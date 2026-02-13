@@ -31,8 +31,22 @@ class Restaurant extends Model
                     ->withPivot('prix_plat');
     }
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'restaut_id', 'id_restaut')
+                    ->orderBy('date_reservation', 'asc');
+    }
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function horaires()
+    {
+        return $this->belongsToMany(HoraireService::class, 'creneaux', 'restaut_id', 'horaire_id')
+                    ->using(Creneau::class)
+                    ->withPivot('id_creneau', 'heure_debut', 'heure_fin')
+                    ->orderBy('heure_debut', 'asc');
     }
 }

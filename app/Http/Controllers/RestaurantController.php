@@ -23,7 +23,6 @@ class RestaurantController extends Controller
                             //  ->orWhere() sur plage horaire;
                             ;
             })
-            // ->latest()
             ->paginate(9);
         return view('home', ['restaurants' => $restaurants]);
     }
@@ -33,7 +32,7 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        // 
+        return view('restaurateur.restaurant_form');
     }
 
     /**
@@ -49,7 +48,9 @@ class RestaurantController extends Controller
      */
     public function show(string $id)
     {
-        $restaut = Restaurant::with(['plats.image', 'images'])->findOrFail($id);
+        $restaut = Restaurant::with(['plats.image', 'images'])
+                    ->with('horaires')
+                    ->findOrFail($id);
         return view('restaut_details', ['restaut' => $restaut]);
     }
 
@@ -58,7 +59,8 @@ class RestaurantController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $restaurant = Restaurant::findOrFail($id);
+        return view('restaurateur.restaurant_form', ['restaurant' => $restaurant]);
     }
 
     /**
@@ -75,5 +77,16 @@ class RestaurantController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * List of restaurants by user
+     */
+    public function restaurantsByUser(int $user_id)
+    {
+        $restaurants = Restaurant::where('user_id', $user_id)
+                       ->with('images')
+                       ->paginate(9);
+        return view('restaurateur.restaurants', ['restaurants' => $restaurants]);
     }
 }
